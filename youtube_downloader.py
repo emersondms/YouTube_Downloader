@@ -79,5 +79,8 @@ def download_video():
 
 # download the videos
 for video in videos_list: 
-    url = video.strip() 
-    download_video()
+    url = video.strip()
+    try: 
+        download_video()
+    except:
+        pass

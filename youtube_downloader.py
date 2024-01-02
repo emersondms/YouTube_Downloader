@@ -3,49 +3,32 @@
 
 import sys
 from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 import re   
 import youtube_dl
 
+#============================================================================
+print ("Initiating the webdriver...")
+
 if len(sys.argv) < 2:
-    sys.exit("Usage: python youtube_downloader.py <playlist_url> [username] [password]")
+    sys.exit("Usage: python youtube_downloader.py <playlist_url>")
 
 playlist_url = sys.argv[1]
-must_login = False
-
-if len(sys.argv) > 2:
-    username = sys.argv[2]
-    password = sys.argv[3]
-    must_login = True
-
-driver = webdriver.Firefox()
+service = Service(GeckoDriverManager().install())
+driver = webdriver.Firefox(service=service)
 driver.implicitly_wait(30)
 driver.get(playlist_url)
 
-if must_login == True:
-    driver.find_element_by_partial_link_text("LOGIN").click()
-
-    edit_user = driver.find_element_by_id("identifierId")
-    edit_user.send_keys(username)
-    edit_user.send_keys(Keys.ENTER)
-
-    driver.find_element_by_name("hiddenPassword")
-    time.sleep(3)
-    actions = ActionChains(driver)
-    actions.send_keys(password)
-    actions.send_keys(Keys.ENTER)
-    actions.perform()
-
-    # validate login
-    driver.find_element_by_id("search-icon-legacy") 
-    time.sleep(3)
+#============================================================================
+print ("Scraping the HTML page source...")
 
 is_page_bottom = "var bottom = (document.documentElement.scrollTop + window.innerHeight) >= document.documentElement.scrollHeight;return bottom"
 y_scroll = 100000
 
-# scroll until reach the page bottom
 while not (driver.execute_script(is_page_bottom)):
     driver.execute_script("window.scrollTo(0, %d)" %y_scroll)
     y_scroll += 100000
@@ -54,10 +37,12 @@ while not (driver.execute_script(is_page_bottom)):
 page_source = driver.page_source
 driver.close()
 
+#============================================================================
+print ("Fetching all video url's...")
+
 videos_list = []
 video_index = 1
 
-# fetch all video url's
 for tag in page_source.split():
    video = re.search("watch..=..........." , tag)
    if video:
@@ -68,16 +53,18 @@ for tag in page_source.split():
                 print (str(video_index)+" - "+url)
                 video_index += 1
                    
+#============================================================================
+print ("Downloading the videos...")
+
 ydl_opts = {
     'format': 'worst', # best
     'nocheckcertificate': True,
 } 
-  
+
 def download_video(): 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
         ydl.download([url]) 
 
-# download the videos
 for video in videos_list: 
     url = video.strip()
     try: 

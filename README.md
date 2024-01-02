@@ -1,14 +1,17 @@
 # YouTube_Downloader
-Download all videos from a YouTube playlist with Python!
+Download all videos from a public YouTube playlist with Python!
 
 ## Setup
-    - Python 3.7 or greater;
-    - Download the geckodriver corresponding to your Firefox version and put it in the script directory;
-    - pip install youtube-dl --upgrade
-    
-## Usage for public playlists:
-    python youtube_downloader.py <playlist_url>
+    - Python >= 3.7
+    - pip install -r requirements.txt
 
-## For particular playlists, put your Google credentials:
-    python youtube_downloader.py <playlist_url> [username] [password]
+## Libs used
+    - selenium4
+    - webdriver_manager
+    - youtube-dl
+
+## Usage
+    python main.py <playlist_url>
+
+
 

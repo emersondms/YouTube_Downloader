@@ -11,11 +11,11 @@ import time
 import re   
 import youtube_dl
 
+if len(sys.argv) < 2:
+    sys.exit("Usage: python main.py <playlist_url>")
+
 #============================================================================
 print ("Initiating the webdriver...")
-
-if len(sys.argv) < 2:
-    sys.exit("Usage: python youtube_downloader.py <playlist_url>")
 
 playlist_url = sys.argv[1]
 service = Service(GeckoDriverManager().install())
@@ -55,7 +55,7 @@ for tag in page_source.split():
                 video_index += 1
                    
 #============================================================================
-print ("Downloading videos...")
+print ("Downloadings videos...")
 
 ydl_opts = {
     'format': 'worst', # best

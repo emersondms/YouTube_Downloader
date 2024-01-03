@@ -12,7 +12,7 @@ import re
 import youtube_dl
 
 #============================================================================
-print ("Initiating the webdriver...")
+print ("Initiating webdriver...")
 
 if len(sys.argv) < 2:
     sys.exit("Usage: python youtube_downloader.py <playlist_url>")
@@ -54,7 +54,7 @@ for tag in page_source.split():
                 video_index += 1
                    
 #============================================================================
-print ("Downloading the videos...")
+print ("Downloading videos...")
 
 ydl_opts = {
     'format': 'worst', # best

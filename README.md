@@ -3,7 +3,7 @@ Download all videos from a public YouTube playlist with Python!
 
 ## Setup
     - Python >= 3.7
-    - pip install -r requirements.txt
+    - pip install -r requirements.txt --upgrade
 
 ## Libs used
     - selenium4

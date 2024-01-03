@@ -26,7 +26,8 @@ driver.get(playlist_url)
 #============================================================================
 print ("Scraping the HTML page source...")
 
-is_page_bottom = "var bottom = (document.documentElement.scrollTop + window.innerHeight) >= document.documentElement.scrollHeight;return bottom"
+is_page_bottom = "var bottom = (document.documentElement.scrollTop + window.innerHeight) >= " \
+                 "document.documentElement.scrollHeight;return bottom"
 y_scroll = 100000
 
 while not (driver.execute_script(is_page_bottom)):

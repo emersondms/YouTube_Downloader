@@ -12,7 +12,7 @@ import re
 import youtube_dl
 
 #============================================================================
-print ("Initiating webdriver...")
+print ("Initiating the webdriver...")
 
 if len(sys.argv) < 2:
     sys.exit("Usage: python youtube_downloader.py <playlist_url>")
